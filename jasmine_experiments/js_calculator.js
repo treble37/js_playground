@@ -9,3 +9,21 @@ function arithmetic(clicked_button_id) {
     res.value = parseInt(n1)-parseInt(n2);
   }
 }
+
+function display_timer() {
+  var ctime = new Date();
+  var chours = ctime.getHours();
+  var cmins = ctime.getMinutes();
+  var csecs = ctime.getSeconds();
+
+  cmins = (cmins<10 ? "0" : "")+cmins;
+  csecs = (csecs<10 ? "0" : "")+csecs;
+
+  var am_pm = chours<12 ? "am" : "pm"
+  chours = (chours > 12) ? chours - 12 : chours;
+  chours = (chours==0) ? 12 : chours;
+
+  var clock_time = chours + ":" + cmins + ":" + csecs + " " + am_pm;
+
+  document.getElementById("clock").innerHTML = clock_time;
+}

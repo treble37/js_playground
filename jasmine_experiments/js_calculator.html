@@ -6,12 +6,12 @@
    <script src="js_calculator.js"></script>
 </head>
 
-<body>
+<body onload="display_timer(); setInterval('display_timer()', 1000 )">
   <input type="text" id="calc1">
   <input type="text" id="calc2">
   <input type="text" id="arithmetic_result">
   <input type="button" value="Add" id="add" onclick="arithmetic(this.id)">
   <input type="button" value="Subtract" id="subtract" onclick="arithmetic(this.id)">
-
+  <div id="clock">&nbsp;</div>
 </body>
 </html>
