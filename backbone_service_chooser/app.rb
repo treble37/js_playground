@@ -7,5 +7,5 @@ get '/' do
 end
 
 post '/bjs' do
-  'hello bjs'
+  params.keys.join(", ")
 end
