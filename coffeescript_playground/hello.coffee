@@ -61,3 +61,21 @@ x = true
 showAnswer = (x = x) ->
   console.log if x then 'It works!' else 'Nope.'
 showAnswer()
+
+##experiments
+
+#START:stdin
+stdin = process.openStdin()
+stdin.setEncoding 'utf8'
+#END:stdin
+
+#START:onData
+inputCallback = null
+stdin.on 'data', (input) -> 
+  m=input.trim()
+  console.log "Input is: "+m
+  process.exit()
+
+
+
+
