@@ -3,6 +3,7 @@ var check_state = new Array(allQuestions.length);
 var finish_index = allQuestions.length-1;
 var question_index = 0;
 var score = 0;
+var is_div_tag = undefined;
 
 window.onload = function() {
   next_question();
@@ -38,9 +39,42 @@ function next_question(checked_index) {
   input_b.setAttribute("onclick","check_answer()");
   display_q.appendChild(input_b);
 
+  var login_b = document.createElement("input");
+  login_b.setAttribute("id","login_id");
+  login_b.setAttribute("type","button");
+  login_b.setAttribute("value","Login");
+  login_b.setAttribute("onclick","login_user()");
+  display_q.appendChild(login_b);
+
+  var login_text = document.createElement("input");
+  login_text.setAttribute("id","login_id_text");
+  login_text.setAttribute("type","text");
+  display_q.appendChild(login_text);
+
   //document.getElementsByTagName('body')[0].appendChild(display_q);
   $(display_q).appendTo("body").hide().fadeIn(1000);
  // $(".p"+(question_index).toString()).fadeIn('slow');
+
+  if (!(is_div_tag===undefined)) {
+    display_name(localStorage.getItem("name"));
+  }
+}
+
+function display_name(text_val) {
+  var display_q = document.getElementsByClassName("p"+question_index.toString())[0];
+  var div_tag = document.createElement("div");
+  div_tag.setAttribute("id","div_id");
+  div_tag.innerHTML = "<h2>"+"Welcome, "+text_val+"</h2>";
+  display_q.appendChild(div_tag);
+}
+function login_user() {
+  is_div_tag = document.getElementById("div_id");
+  if (is_div_tag) {
+    $(is_div_tag).remove();
+  }
+  var text_val = document.getElementById("login_id_text").value;
+  localStorage.setItem("name",text_val);
+  display_name(text_val);
 }
 
 function back_up() {
