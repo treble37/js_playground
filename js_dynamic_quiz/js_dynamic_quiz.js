@@ -27,7 +27,7 @@ function next_question(checked_index) {
     display_q.appendChild(radio_b);
     display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
   }
-  
+
   var back_b = document.createElement("input");
   back_b.setAttribute("type","button");
   back_b.setAttribute("value","Back");
@@ -40,7 +40,9 @@ function next_question(checked_index) {
   input_b.setAttribute("onclick","check_answer()");
   display_q.appendChild(input_b);
 
-  document.getElementsByTagName('body')[0].appendChild(display_q);
+  //document.getElementsByTagName('body')[0].appendChild(display_q);
+  $(display_q).appendTo("body").hide().fadeIn(1000);
+ // $(".p"+(question_index).toString()).fadeIn('slow');
 }
 
 function back_up() {
@@ -102,11 +104,12 @@ function no_answer() {
 
 function hidep() {
 //var body_node = document.getElementsByTagName("body")[0];
-  var p_list = document.getElementsByTagName("p");
-  for(var i=p_list.length-1; i>=0; i--){
-       var p = p_list[i];
-       if(p.className === "p"+(question_index).toString()){
-           p.parentNode.removeChild(p);
-       }
-   }
+  $(".p"+(question_index).toString()).fadeOut('slow', function() { $(this).remove(); });
+  // var p_list = document.getElementsByTagName("p");
+  // for(var i=p_list.length-1; i>=0; i--){
+  //      var p = p_list[i];
+  //      if(p.className === "p"+(question_index).toString()){
+  //          p.parentNode.removeChild(p);
+  //      }
+  //  }
 }
