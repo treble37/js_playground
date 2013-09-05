@@ -1,8 +1,3 @@
-
-var allQuestions = [{question: "New Orleans is considered the birthplace of jazz. However, most of the great recordings of the 1920s were made in a northern city which gives its name to the two dominant jazz genres of that decade. What city was the 1920s home base of Louisiana-born King Oliver, Louis Armstrong and Jelly Roll Morton, as well as Iowa-born Bix Beiderbecke and the young Benny Goodman?", choices: ["Los Angeles", "Chicago", "Seattle", "Vancouver"], correctAnswer:1},
-  {question: "The blues has always been a major component of all jazz styles. What style of blues from the 1920s featured great divas like Bessie Smith and Ma Rainy, as well as contributions by great jazz figures like Louis Armstrong and Fletcher Henderson??", choices: ["Country Blues", "Classic Blues", "Delta Blues", "Texas Blues"], correctAnswer:1},
-  {question: "The commercial heyday of jazz music came in the 1930s and '40s, when jazz forms were the dominant music for dances and social events. Which of these terms is commonly applied to the mainstream jazz of this era??", choices: ["Bebop", "Cool Jazz", "Dixieland", "Swing"], correctAnswer:3}
-];
 var check_state = new Array(allQuestions.length);
 
 var finish_index = allQuestions.length-1;
