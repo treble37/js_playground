@@ -62,6 +62,23 @@ showAnswer = (x = x) ->
   console.log if x then 'It works!' else 'Nope.'
 showAnswer()
 
+#4.7 p. 72
+root = global ? window
+root.aphorism = 'Fool me 8 or more times, shame on me'
+do restoreOldAphorism = ->
+  aphorism = 'Fool me once, shame on you'
+  console.log aphorism
+
+console.log aphorism
+
+Genie = ->
+  Genie::wishesLeft = 3
+Genie::grantWish = ->
+  if @wishesLeft > 0
+    console.log 'Your wish is granted!'
+    @wishesLeft--
+
+console.log Genie
 ##experiments
 
 #START:stdin
