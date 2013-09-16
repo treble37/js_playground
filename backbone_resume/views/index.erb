@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Backbone Resume </title>
+
+        <!-- Google web fonts -->
+        <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel='stylesheet' />
+
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen"> 
+        <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen"> -->
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="../../assets/js/html5shiv.js"></script>
+          <script src="../../assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <header class="navbar navbar-fixed-top">
+          <nav class="navbar-inner">
+            <div class="container">
+              <ul class="nav nav-pills">
+                <li><a href="#">Home</a></li>
+              </ul>
+            </div>
+          </nav>
+        </header>
+        <main role="main">
+          <div class="container">
+            <div class="content">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="page-header">
+                    <h1>Resume</h1>
+                  </div>
+                  <form id="skill_view">
+                    <ul class="list-group" id="skill_list">
+                       <!-- The skills will be inserted here -->
+                    </ul>
+                </form>
+                </div>
+              </div>
+              <footer>
+              </footer>
+            </div>
+          </div>
+        </main>
+
+        <!-- JavaScript Includes -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="/js/resume.js"></script>
+    </body>
+</html>
