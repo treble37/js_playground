@@ -45,7 +45,8 @@ $(function(){
             // Create the HTML
 
             //this.$el.html('<input type="text" value=' + this.model.get('proficiency') + ' ' + name="' + this.model.get('title') + '" /> ' + this.model.get('title') + '<span>$' + this.model.get('price') + '</span>');
-             this.$el.html('<input class="input-sm" type="text" value="' + this.model.get('proficiency') +'" ' + 'name="' + this.model.get('skill') + '" /> ' + '<span>' + this.model.get('skill') + '</span>' + '<span> Proficiency: ' + this.model.get('proficiency') + '%</span>');
+            $(this.el).addClass('list-group-item').html('li');
+            this.$el.html('<input class="input-sm" type="text" value="' + this.model.get('proficiency') +'" ' + 'name="' + this.model.get('skill') + '" /> ' + '<span>' + this.model.get('skill') + '</span>' + '<span> Proficiency: ' + this.model.get('proficiency') + '%</span>');
             //this.$('input').prop('checked', this.model.get('checked'));
 
             // Returning the object is a good practice
