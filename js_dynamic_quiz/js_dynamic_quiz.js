@@ -8,16 +8,28 @@ var is_div_tag = undefined;
 window.onload = function() {
   next_question();
 }
+
+function create_element(type,group_num_str,id,value,handler,handler_func) {
+  var input_elem = document.createElement("input");
+  input_elem.setAttribute("type",type);
+  if (type=="radio") {
+    input_elem.setAttribute("name","group"+group_num_str);
+  }
+  input_elem.setAttribute("value",value);
+  if (type=="button") {
+    input_elem.setAttribute("id",id);
+    input_elem.setAttribute("value",value);
+    input_elem.setAttribute(handler,handler_func);
+  }
+  return input_elem;
+}
 function next_question(checked_index) {
   var display_q = document.createElement("p");
   display_q.className = "p"+question_index.toString();
   var radio_b;
   display_q.innerHTML += allQuestions[question_index]["question"]+"<br>";
   for (var i=0; i<allQuestions[question_index]["choices"].length; i++) {
-    radio_b = document.createElement("input");
-    radio_b.setAttribute("type","radio");
-    radio_b.setAttribute("name","group"+question_index.toString());
-    radio_b.setAttribute("value",allQuestions[question_index]["choices"][i]);
+    radio_b = create_element("radio",question_index.toString(),"",allQuestions[question_index]["choices"][i],"","");
     if (i==checked_index) {
       radio_b.setAttribute("checked","checked");
     }
@@ -25,25 +37,13 @@ function next_question(checked_index) {
     display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
   }
 
-  var back_b = document.createElement("input");
-  back_b.setAttribute("id","back_id");
-  back_b.setAttribute("type","button");
-  back_b.setAttribute("value","Back");
-  back_b.setAttribute("onclick","back_up()");
+  var back_b = create_element("button","","back_id","Back","onclick","backup()")
   display_q.appendChild(back_b);
 
-  var input_b = document.createElement("input");
-  input_b.setAttribute("id","next_id");
-  input_b.setAttribute("type","button");
-  input_b.setAttribute("value","Next");
-  input_b.setAttribute("onclick","check_answer()");
+  var input_b = create_element("button","","next_id","Next","onclick","check_answer()")
   display_q.appendChild(input_b);
 
-  var login_b = document.createElement("input");
-  login_b.setAttribute("id","login_id");
-  login_b.setAttribute("type","button");
-  login_b.setAttribute("value","Login");
-  login_b.setAttribute("onclick","login_user()");
+  var login_b = create_element("button","","login_id","Login","onclick","login_user()")
   display_q.appendChild(login_b);
 
   var login_text = document.createElement("input");
@@ -96,7 +96,6 @@ function back_up() {
   }
 }
 
-
 function check_answer() {
   
   if (no_answer()) {
@@ -130,7 +129,7 @@ function no_answer() {
   var no_answer_flag = true;
   for (var i=0; i<input_buttons.length; i++) {
     if (input_buttons[i].type=="radio"&&input_buttons[i].checked) {
-      no_answer_flag = false;
+      no_answer_flag = false; 
     }
   } 
   return no_answer_flag;
