@@ -11,16 +11,19 @@ window.onload = function() {
 
 //setup prototype
 function InputElementProps() {
+  this.attrs = new Object();
+  this.attrs["type"] = "button";
+  this.attrs["id"] = null;
+  this.attrs["name"] = null;
+  this.attrs["value"] = null;
+  this.attrs["checked"] = null;
+  this.handle_func = new Object();
+  this.handle_func["handler"] = null;
+  this.handle_func["handler_func"] = null;
 }
-InputElementProps.prototype.attrs = new Object();
-InputElementProps.prototype.handle_func = new Object();
-  InputElementProps.prototype.attrs["type"] = "button";
-  InputElementProps.prototype.attrs["id"] = null;
-  InputElementProps.prototype.attrs["name"] = null;
-  InputElementProps.prototype.attrs["value"] = null;
-  InputElementProps.prototype.attrs["checked"] = null;
-  InputElementProps.prototype.handle_func["handler"] = null;
-  InputElementProps.prototype.handle_func["handler_func"] = null;
+InputElementProps.prototype = {
+  constructor: InputElementProps
+};
 
 var radio_props = new InputElementProps();
   radio_props.attrs["type"] = "radio";
@@ -47,7 +50,6 @@ function next_question(checked_index) {
 
   display_q.innerHTML += allQuestions[question_index]["question"]+"<br>";
   for (var i=0; i<allQuestions[question_index]["choices"].length; i++) {
-    radio_props.attrs["type"] = "radio";
     radio_props.attrs["name"] = "group"+question_index.toString();
     radio_props.attrs["value"] = allQuestions[question_index]["choices"][i];
     if (i==checked_index) {
@@ -59,7 +61,6 @@ function next_question(checked_index) {
     display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
   }
   
-  button_props.attrs["type"] = "button";
   button_props.attrs["id"] = "back_id";
   button_props.attrs["value"] = "Back";
   button_props.handle_func["handler"] = "onclick";
@@ -69,14 +70,12 @@ function next_question(checked_index) {
 
   button_props.attrs["id"] = "next_id";
   button_props.attrs["value"] = "Next";
-  button_props.handle_func["handler"] = "onclick";
   button_props.handle_func["handler_func"] = "check_answer()";
   var input_b = create_element(button_props);
   display_q.appendChild(input_b);
 
   button_props.attrs["id"] = "login_id";
   button_props.attrs["value"] = "Login";
-  button_props.handle_func["handler"] = "onclick";
   button_props.handle_func["handler_func"] = "login_user()";
   var login_b = create_element(button_props);
   display_q.appendChild(login_b);
@@ -86,9 +85,7 @@ function next_question(checked_index) {
   login_text.setAttribute("type","text");
   display_q.appendChild(login_text);
 
-  //document.getElementsByTagName('body')[0].appendChild(display_q);
   $(display_q).appendTo("body").hide().fadeIn(1000);
- // $(".p"+(question_index).toString()).fadeIn('slow');
 
   if (!(is_div_tag===undefined)) {
     display_name(localStorage.getItem("name"));
@@ -122,15 +119,16 @@ function back_up() {
   question_index = question_index-1;
   next_question(check_state[question_index]);
 
-  //rollback score - DRY this up?
-  var input_buttons = document.getElementsByTagName("input");
-  for (var i=0; i<input_buttons.length; i++) {
-    if (input_buttons[i].type=="radio"&&input_buttons[i].checked && i==allQuestions[question_index]["correctAnswer"]) {
-      score = score-1;
-    }
-  }
 }
 
+function compute_score() {
+  for (var i = 0; i<check_state.length; i++) {
+    if (check_state[i]==allQuestions[i]["correctAnswer"]) {
+      score +=1;
+    }
+  }
+  return score;
+}
 function check_answer() {
   
   if (no_answer()) {
@@ -140,15 +138,12 @@ function check_answer() {
     
   var input_buttons = document.getElementsByTagName("input");
   for (var i=0; i<input_buttons.length; i++) {
-    if (input_buttons[i].type=="radio"&&input_buttons[i].checked && i==allQuestions[question_index]["correctAnswer"]) {
-      score += 1;
-    }
     if (input_buttons[i].checked) {
       check_state[question_index] = i;
     }
   }
   if (question_index==finish_index) {
-    alert("Your score is: "+score+" out of "+allQuestions.length);
+    alert("Your score is: "+compute_score()+" out of "+allQuestions.length);
     document.getElementById("back_id").disabled = true;
     document.getElementById("next_id").disabled = true;
   }
@@ -171,13 +166,5 @@ function no_answer() {
 }
 
 function hidep() {
-//var body_node = document.getElementsByTagName("body")[0];
   $(".p"+(question_index).toString()).fadeOut('slow', function() { $(this).remove(); });
-  // var p_list = document.getElementsByTagName("p");
-  // for(var i=p_list.length-1; i>=0; i--){
-  //      var p = p_list[i];
-  //      if(p.className === "p"+(question_index).toString()){
-  //          p.parentNode.removeChild(p);
-  //      }
-  //  }
 }
