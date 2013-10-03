@@ -25,6 +25,21 @@ InputElementProps.prototype = {
   constructor: InputElementProps
 };
 
+function set_input_element_props(iep, type, id, name, value, checked, handler_val, handler_func_val) {
+  iep.attrs["type"] = type||null;
+  iep.attrs["id"] = id||null;
+  iep.attrs["name"] = name||null;
+  iep.attrs["value"] = value||null;
+  iep.attrs["checked"] = checked||null;
+  iep.handle_func["handler"] = handler_val||null;
+  iep.handle_func["handler_func"] = handler_func_val||null;
+}
+
+function attach_input_to_dom_element(dom_parent, input_elem_props) {
+  var dom_child = create_element(input_elem_props);
+  dom_parent.appendChild(dom_child);
+}
+
 var radio_props = new InputElementProps();
   radio_props.attrs["type"] = "radio";
 
@@ -60,25 +75,14 @@ function next_question(checked_index) {
     display_q.appendChild(radio_b);
     display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
   }
-  
-  button_props.attrs["id"] = "back_id";
-  button_props.attrs["value"] = "Back";
-  button_props.handle_func["handler"] = "onclick";
-  button_props.handle_func["handler_func"] = "backup()";
-  var back_b = create_element(button_props);
-  display_q.appendChild(back_b);
+  set_input_element_props(button_props,"button","back_id",null,"Back",null,"onclick","backup()");
+  attach_input_to_dom_element(display_q, button_props);
 
-  button_props.attrs["id"] = "next_id";
-  button_props.attrs["value"] = "Next";
-  button_props.handle_func["handler_func"] = "check_answer()";
-  var input_b = create_element(button_props);
-  display_q.appendChild(input_b);
+  set_input_element_props(button_props,"button","next_id",null,"Next",null,"onclick","check_answer()");
+  attach_input_to_dom_element(display_q, button_props);
 
-  button_props.attrs["id"] = "login_id";
-  button_props.attrs["value"] = "Login";
-  button_props.handle_func["handler_func"] = "login_user()";
-  var login_b = create_element(button_props);
-  display_q.appendChild(login_b);
+  set_input_element_props(button_props,"button","login_id",null,"Login",null,"onclick","login_user()");
+  attach_input_to_dom_element(display_q, button_props);
 
   var login_text = document.createElement("input");
   login_text.setAttribute("id","login_id_text");
