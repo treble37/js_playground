@@ -37,7 +37,9 @@ function set_input_element_props(iep, type, id, name, value, checked, handler_va
 
 function attach_input_to_dom_element(dom_parent, input_elem_props) {
   var dom_child = create_element(input_elem_props);
+  dom_child.addEventListener(input_elem_props.handle_func["handler"], input_elem_props.handle_func["handler_func"],false);
   dom_parent.appendChild(dom_child);
+  
 }
 
 var radio_props = new InputElementProps();
@@ -53,9 +55,7 @@ function create_element(elem_prop) {
       input_elem.setAttribute(prop,elem_prop.attrs[prop]);
     }
   }
-  if (elem_prop.handle_func["handler"]) {
-    input_elem.setAttribute(elem_prop.handle_func["handler"],elem_prop.handle_func["handler_func"]);
-  }
+
   return input_elem;
 }
 function next_question(checked_index) {
@@ -75,13 +75,13 @@ function next_question(checked_index) {
     display_q.appendChild(radio_b);
     display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
   }
-  set_input_element_props(button_props,"button","back_id",null,"Back",null,"onclick","backup()");
+  set_input_element_props(button_props,"button","back_id",null,"Back",null,"click",back_up);
   attach_input_to_dom_element(display_q, button_props);
 
-  set_input_element_props(button_props,"button","next_id",null,"Next",null,"onclick","check_answer()");
+  set_input_element_props(button_props,"button","next_id",null,"Next",null,"click",check_answer);
   attach_input_to_dom_element(display_q, button_props);
 
-  set_input_element_props(button_props,"button","login_id",null,"Login",null,"onclick","login_user()");
+  set_input_element_props(button_props,"button","login_id",null,"Login",null,"click",login_user);
   attach_input_to_dom_element(display_q, button_props);
 
   var login_text = document.createElement("input");
