@@ -5,7 +5,10 @@ var question_index = 0;
 var score = 0;
 var is_div_tag = undefined;
 
+var q_obj_arr = new Array();
+
 window.onload = function() {
+  load_quiz_questions();
   next_question();
 }
 
@@ -24,6 +27,28 @@ function InputElementProps() {
 InputElementProps.prototype = {
   constructor: InputElementProps
 };
+
+//setup question prototype
+
+function QuestionObject() {
+  this.attrs = new Object();
+  this.attrs["question"] = "default question?";
+  this.attrs["answer_choices"] = new Array("Los Angeles","Chicago","Seattle","Vancouver");
+  this.attrs["answer_index"] = 0;
+} 
+
+InputElementProps.prototype = {
+  constructor: QuestionObject
+};
+
+function load_quiz_questions() {
+  for (var i = 0; i<allQuestions.length; i++) {
+    q_obj_arr[i] = new QuestionObject();
+    q_obj_arr[i].attrs["question"] = allQuestions[i]["question"];
+    q_obj_arr[i].attrs["answer_choices"] = allQuestions[i]["choices"];
+    q_obj_arr[i].attrs["answer_index"] = allQuestions[i]["correctAnswer"];
+  }
+}
 
 function set_input_element_props(iep, type, id, name, value, checked, handler_val, handler_func_val) {
   iep.attrs["type"] = type||null;
@@ -58,22 +83,25 @@ function create_element(elem_prop) {
 
   return input_elem;
 }
-function next_question(checked_index) {
+function next_question() {
   var display_q = document.createElement("p");
   display_q.className = "p"+question_index.toString();
   var radio_b;
 
-  display_q.innerHTML += allQuestions[question_index]["question"]+"<br>";
-  for (var i=0; i<allQuestions[question_index]["choices"].length; i++) {
+  display_q.innerHTML += q_obj_arr[question_index].attrs["question"]+"<br>";
+  for (var i=0; i<q_obj_arr[question_index].attrs["answer_choices"].length; i++) {
     radio_props.attrs["name"] = "group"+question_index.toString();
-    radio_props.attrs["value"] = allQuestions[question_index]["choices"][i];
-    if (i==checked_index) {
+    radio_props.attrs["value"] = q_obj_arr[question_index].attrs["answer_choices"][i];
+    if (i==check_state[question_index]) {
       radio_props.attrs["checked"] = "checked";
+    }
+    else {
+      radio_props.attrs["checked"] = null;
     }
     radio_b = create_element(radio_props);
     
     display_q.appendChild(radio_b);
-    display_q.innerHTML += allQuestions[question_index]["choices"][i]+"<br>";
+    display_q.innerHTML += q_obj_arr[question_index].attrs["answer_choices"][i]+"<br>";
   }
   set_input_element_props(button_props,"button","back_id",null,"Back",null,"click",back_up);
   attach_input_to_dom_element(display_q, button_props);
@@ -127,7 +155,7 @@ function back_up() {
 
 function compute_score() {
   for (var i = 0; i<check_state.length; i++) {
-    if (check_state[i]==allQuestions[i]["correctAnswer"]) {
+    if (check_state[i]==q_obj_arr[i].attrs["answer_index"]) {
       score +=1;
     }
   }
@@ -147,7 +175,7 @@ function check_answer() {
     }
   }
   if (question_index==finish_index) {
-    alert("Your score is: "+compute_score()+" out of "+allQuestions.length);
+    alert("Your score is: "+compute_score()+" out of "+q_obj_arr.length);
     document.getElementById("back_id").disabled = true;
     document.getElementById("next_id").disabled = true;
   }
