@@ -83,15 +83,16 @@ function create_element(elem_prop) {
 
   return input_elem;
 }
-function next_question() {
+
+function render_question(q_obj) {
   var display_q = document.createElement("p");
   display_q.className = "p"+question_index.toString();
   var radio_b;
 
-  display_q.innerHTML += q_obj_arr[question_index].attrs["question"]+"<br>";
-  for (var i=0; i<q_obj_arr[question_index].attrs["answer_choices"].length; i++) {
+  display_q.innerHTML += q_obj.attrs["question"]+"<br>";
+  for (var i=0; i<q_obj.attrs["answer_choices"].length; i++) {
     radio_props.attrs["name"] = "group"+question_index.toString();
-    radio_props.attrs["value"] = q_obj_arr[question_index].attrs["answer_choices"][i];
+    radio_props.attrs["value"] = q_obj.attrs["answer_choices"][i];
     if (i==check_state[question_index]) {
       radio_props.attrs["checked"] = "checked";
     }
@@ -101,7 +102,7 @@ function next_question() {
     radio_b = create_element(radio_props);
     
     display_q.appendChild(radio_b);
-    display_q.innerHTML += q_obj_arr[question_index].attrs["answer_choices"][i]+"<br>";
+    display_q.innerHTML += q_obj.attrs["answer_choices"][i]+"<br>";
   }
   set_input_element_props(button_props,"button","back_id",null,"Back",null,"click",back_up);
   attach_input_to_dom_element(display_q, button_props);
@@ -118,6 +119,13 @@ function next_question() {
   display_q.appendChild(login_text);
 
   $(display_q).appendTo("body").hide().fadeIn(1000);
+
+  return display_q;
+}
+
+function next_question() {
+  
+  var display_q = render_question(q_obj_arr[question_index]);
 
   if (!(is_div_tag===undefined)) {
     display_name(localStorage.getItem("name"));
