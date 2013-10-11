@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="quiz_question">
+  <input id="back_id" type="button" value="Back">
+  <input id="next_id" type="button" value="Next">
+</div>
+
+<script type="text/template" id="qtemplate"></script>
+<script src="js/jquery-2.0.2.min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/backbone-min.js"></script>
+<script src="js/backbone.localStorage.js"></script>
+<script src="js/questionmodel.js"></script>
+<script src="js/questioncollection.js"></script>
+<script src="js/questionview.js"></script>
+<script src="js/app.js"></script>
+
+
+
+<script type="text/template" id="qtemplate">
+  <div><%= msg %></div>
+</script>
+  
+</body>
+</html>
