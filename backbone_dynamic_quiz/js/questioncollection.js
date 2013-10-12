@@ -28,9 +28,8 @@ var QuestionList = Backbone.Collection.extend({
       return 0;
     }
     return this.question_index;
-  }
+  } 
   
 });
 
-// Create our global collection of **Questions**.
-app.Questions = new QuestionList();
+
