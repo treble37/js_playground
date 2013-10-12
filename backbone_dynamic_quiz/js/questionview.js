@@ -15,8 +15,9 @@ app.QuestionView = Backbone.View.extend({
     events: {
       'click #back_id': 'displayNextQuestion',
       'click #next_id': function(e) {
+        this.trackScore();  //must track score before displaying next question
         this.displayNextQuestion(e);
-        this.computeScore();
+        this.computeScore(); 
       }
     },
     // The QuestionView listens for changes to its model, re-rendering. Since there's
@@ -44,10 +45,27 @@ app.QuestionView = Backbone.View.extend({
         }
         this.render();
     },
-    computeScore: function() {
-        _.each(this.collection.models, function(mdl) {
-            
-        });
+    trackScore: function() {
+        var selected_btn = $("input[type='radio']:checked");
+        this.model.user_answer_index = -1;
+
+        if (selected_btn) {
+            if (this.model.answer_choices[this.model.answer_index]==selected_btn.val()) {
+                this.model.user_answer_index = this.model.answer_index;
+            }
+        }
+    },
+    computeScore: function() { 
+    
+        var collection_obj = this.collection;
+        if (this.collection.question_index==this.collection.length) {
+            _.each(this.collection.models, function(mdl) {
+                if (mdl.user_answer_index == mdl.answer_index) {
+                    collection_obj.user_score += 1;
+                }
+            }); //end _.each
+            alert("Your final score is: "+this.collection.user_score);
+        }
     }
 });
 

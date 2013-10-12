@@ -14,7 +14,7 @@
   <p class='p<%= this.collection.question_index %>'><%= question %>
   <br>
   <% for(var i=0; i<answer_choices.length; i++) { %>
-           <input type='radio' name='group<%= this.collection.question_index %>' value="Los Angeles"><%= answer_choices[i] %><br>
+           <input type='radio' name='group<%= this.collection.question_index %>' value="<%= answer_choices[i] %>"><%= answer_choices[i] %><br>
        <% } %>
   
   <input id="back_id" type="button" value="Back">

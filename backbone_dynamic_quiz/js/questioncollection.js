@@ -3,6 +3,7 @@ var app = app || {};
 var QuestionList = Backbone.Collection.extend({
   initialize: function() {
     this.question_index=0;
+    this.user_score = 0;
   },
   // Reference to this collection's model.
   model: app.QuestionModel,
