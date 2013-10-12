@@ -11,12 +11,15 @@
 </div>
 
 <script type="text/template" id="qtemplate">
-  <p><%= question %></p>
+  <p class='p<%= this.collection.question_index %>'><%= question %>
+  <br>
   <% for(var i=0; i<answer_choices.length; i++) { %>
-           <input type='radio' name='group<%= this.collection.question_index %>' value="Los Angeles">
+           <input type='radio' name='group<%= this.collection.question_index %>' value="Los Angeles"><%= answer_choices[i] %><br>
        <% } %>
+  
   <input id="back_id" type="button" value="Back">
   <input id="next_id" type="button" value="Next">
+  </p>
 </script>
 
 <script src="js/jquery-2.0.2.min.js"></script>

@@ -11,24 +11,18 @@ var QuestionList = Backbone.Collection.extend({
   // Save all of the questions under the `"questions-backbone"` namespace.
   localStorage: new Backbone.LocalStorage('questions-backbone'),
 
-  //iterate to next question
-  nextQuestion: function() {
-    this.question_index += 1;
-    if (this.question_index>=this.length) {
-      return this.length;
-    }
+  //iterate to next question or go back
+  nextQuestion: function(n) {
+    this.question_index += n;
+    switch(n) {
+      case -1:
+        this.question_index = (this.question_index<0) ? 0 : this.question_index;
+        break;
+      default:
+        break;
+    } 
     return this.question_index;
   },
-
-  //go back to previous question
-
-  previousQuestion: function() {
-    this.question_index -= 1;
-    if (this.question_index<0) {
-      return 0;
-    }
-    return this.question_index;
-  } 
   
 });
 
