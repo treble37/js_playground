@@ -37,7 +37,7 @@ function QuestionObject() {
   this.attrs["answer_index"] = 0;
 } 
 
-InputElementProps.prototype = {
+QuestionObject.prototype = {
   constructor: QuestionObject
 };
 
