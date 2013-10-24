@@ -41,6 +41,12 @@ QuestionObject.prototype = {
   constructor: QuestionObject
 };
 
+var radio_props = new InputElementProps();
+  radio_props.attrs["type"] = "radio";
+
+var button_props = new InputElementProps();
+  button_props.attrs["type"] = "button";
+
 function load_quiz_questions() {
   for (var i = 0; i<allQuestions.length; i++) {
     q_obj_arr[i] = new QuestionObject();
@@ -50,7 +56,7 @@ function load_quiz_questions() {
   }
 }
 
-function set_input_element_props(iep, type, id, name, value, checked, handler_val, handler_func_val) {
+function create_button(iep, type, id, name, value, checked, handler_val, handler_func_val, dom_parent) {
   iep.attrs["type"] = type||null;
   iep.attrs["id"] = id||null;
   iep.attrs["name"] = name||null;
@@ -58,20 +64,10 @@ function set_input_element_props(iep, type, id, name, value, checked, handler_va
   iep.attrs["checked"] = checked||null;
   iep.handle_func["handler"] = handler_val||null;
   iep.handle_func["handler_func"] = handler_func_val||null;
-}
-
-function attach_input_to_dom_element(dom_parent, input_elem_props) {
-  var dom_child = create_element(input_elem_props);
-  dom_child.addEventListener(input_elem_props.handle_func["handler"], input_elem_props.handle_func["handler_func"],false);
+  var dom_child = create_element(iep);
+  dom_child.addEventListener(iep.handle_func["handler"], iep.handle_func["handler_func"],false);
   dom_parent.appendChild(dom_child);
-  
 }
-
-var radio_props = new InputElementProps();
-  radio_props.attrs["type"] = "radio";
-
-var button_props = new InputElementProps();
-  button_props.attrs["type"] = "button";
 
 function create_element(elem_prop) {
   var input_elem = document.createElement("input");
@@ -84,12 +80,8 @@ function create_element(elem_prop) {
   return input_elem;
 }
 
-function render_question(q_obj) {
-  var display_q = document.createElement("p");
-  display_q.className = "p"+question_index.toString();
+function render_radio_button_choices(dom_parent,q_obj) {
   var radio_b;
-
-  display_q.innerHTML += q_obj.attrs["question"]+"<br>";
   for (var i=0; i<q_obj.attrs["answer_choices"].length; i++) {
     radio_props.attrs["name"] = "group"+question_index.toString();
     radio_props.attrs["value"] = q_obj.attrs["answer_choices"][i];
@@ -101,17 +93,25 @@ function render_question(q_obj) {
     }
     radio_b = create_element(radio_props);
     
-    display_q.appendChild(radio_b);
-    display_q.innerHTML += q_obj.attrs["answer_choices"][i]+"<br>";
+    dom_parent.appendChild(radio_b);
+    dom_parent.innerHTML += q_obj.attrs["answer_choices"][i]+"<br>";
   }
-  set_input_element_props(button_props,"button","back_id",null,"Back",null,"click",back_up);
-  attach_input_to_dom_element(display_q, button_props);
+}
 
-  set_input_element_props(button_props,"button","next_id",null,"Next",null,"click",check_answer);
-  attach_input_to_dom_element(display_q, button_props);
+function render_question(q_obj) {
+  var display_q = document.createElement("p");
+  display_q.className = "p"+question_index.toString();
+  
 
-  set_input_element_props(button_props,"button","login_id",null,"Login",null,"click",login_user);
-  attach_input_to_dom_element(display_q, button_props);
+  display_q.innerHTML += q_obj.attrs["question"]+"<br>";
+  
+  render_radio_button_choices(display_q,q_obj);
+
+  create_button(button_props,"button","back_id",null,"Back",null,"click",back_up,display_q);
+
+  create_button(button_props,"button","next_id",null,"Next",null,"click",check_answer,display_q);
+
+  create_button(button_props,"button","login_id",null,"Login",null,"click",login_user,display_q);
 
   var login_text = document.createElement("input");
   login_text.setAttribute("id","login_id_text");
