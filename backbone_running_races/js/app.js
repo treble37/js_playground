@@ -4,6 +4,7 @@
 
   // Create our global collection of **Races**.
   app.Races = new RaceList(r_obj_arr);
+
   $(function() {
 
     // Kick things off by creating the **App**.

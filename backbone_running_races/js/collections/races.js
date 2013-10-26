@@ -6,7 +6,8 @@
   // The collection of Races is backed by *localStorage* instead of a remote
   // server.
   var RaceList = Backbone.Collection.extend({
-
+    initialize: function() {
+    },
     // Reference to this collection's model.
     model: app.RaceModel,
 
