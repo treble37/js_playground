@@ -22,12 +22,14 @@ app.RaceView = Backbone.View.extend({
         _.bindAll(this, 'render','addRace');
         this.collection.bind('add', this.render);
         this.collection.bind('reset', this.render);
+        this.collection.fetch();
+        alert(this.collection.length);
         this.render();
     },
 
     render: function(){
         //_.extend is an underscore.js method to combine multiple JSON objects into one
-        this.$el.html(this.raceTemplate(_.extend({},this.model.toJSON(),{collection_obj: this.collection})));
+        this.$el.html(this.raceTemplate(_.extend({},{collection_obj: this.collection})));
         return this;
     },
 

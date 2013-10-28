@@ -16,5 +16,4 @@
 
   });
 
-  // Create our global collection of **Races**.
-  app.Races = new RaceList();
+
