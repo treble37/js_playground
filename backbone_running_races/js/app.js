@@ -5,6 +5,7 @@
   // Create our global collection of **Races**.
   //app.Races = new RaceList(r_obj_arr);
     // Create our global collection of **Races**.
+  localStorage.clear();
   app.Races = new RaceList();
   for (var i=0; i<r_obj_arr.length; i++) {
     app.Races.add(r_obj_arr[i]);
