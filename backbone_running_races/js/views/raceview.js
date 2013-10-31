@@ -23,7 +23,6 @@ app.RaceView = Backbone.View.extend({
         this.collection.bind('add', this.render);
         this.collection.bind('reset', this.render);
         this.collection.fetch();
-        alert(this.collection.length);
         this.render();
     },
 
