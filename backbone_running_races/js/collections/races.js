@@ -8,11 +8,12 @@
   var RaceList = Backbone.Collection.extend({
     initialize: function() {
     },
+    url: 'races',
     // Reference to this collection's model.
     model: app.RaceModel,
 
     // Save all of the race items under the `"races-backbone"` namespace.
-    localStorage: new Backbone.LocalStorage('races-backbone'),
+    // localStorage: new Backbone.LocalStorage('races-backbone'),
 
   });
 
