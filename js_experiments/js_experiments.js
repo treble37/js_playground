@@ -12,6 +12,6 @@ function init_msg_alert(fobj,func_name) {
 }
 $( document ).ready(function() {
   var fop = new FunctionObjectProps();
-  init_msg_alert(fop,msg_alert("someday"));
+  init_msg_alert(fop,msg_alert);
   fop.function_call("hello");
 });
