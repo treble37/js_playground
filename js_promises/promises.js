@@ -12,3 +12,10 @@ var promise = deferred.promise();
 
 deferred.resolve();
 promise.done(message("done"));
+$.when().then(function( x ) {
+  console.log( "I fired immediately" );
+});
+q = [message("help1"), msg];
+$.when.apply($, q).then(function() {
+  console.log('oh well');
+});
